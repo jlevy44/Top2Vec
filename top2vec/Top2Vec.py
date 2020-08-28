@@ -74,18 +74,18 @@ class Top2Vec:
     workers: int (Optional)
         The amount of worker threads to be used in training the model. Larger
         amount will lead to faster training.
-    
+
     tokenizer: callable (Optional, default None)
         Override the default tokenization method. If None then gensim.utils.simple_preprocess
         will be used.
-    
+
     verbose: bool (Optional, default False)
         Whether to print status data during training.
 
     """
 
     def __init__(self, documents, min_count=50, speed="fast-learn", use_corpus_file=False, document_ids=None,
-                 keep_documents=True, workers=None, tokenizer=None, verbose=False):
+                 keep_documents=True, workers=None, tokenizer=None, verbose=False, window=15):
 
         if verbose:
             logger.setLevel(logging.DEBUG)
@@ -171,7 +171,7 @@ class Top2Vec:
                 self.model = Doc2Vec(corpus_file=temp.name,
                                      vector_size=300,
                                      min_count=min_count,
-                                     window=15,
+                                     window=window,
                                      sample=1e-5,
                                      negative=negative,
                                      hs=hs,
@@ -182,7 +182,7 @@ class Top2Vec:
                 self.model = Doc2Vec(corpus_file=temp.name,
                                      vector_size=300,
                                      min_count=min_count,
-                                     window=15,
+                                     window=window,
                                      sample=1e-5,
                                      negative=negative,
                                      hs=hs,
@@ -197,7 +197,7 @@ class Top2Vec:
                 self.model = Doc2Vec(documents=train_corpus,
                                      vector_size=300,
                                      min_count=min_count,
-                                     window=15,
+                                     window=window,
                                      sample=1e-5,
                                      negative=negative,
                                      hs=hs,
